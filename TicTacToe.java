@@ -1,11 +1,11 @@
 /**
- * Homework to a lesson 5*
+ * Homework to a lesson 6*
  *
  * @author Alexander Moroz
- * @since 2017-02-03
- * @version 1.0
+ * @since 2017-03-04
+ * @version 3.0
  *
- * ”прощенный вариант игры крестики-нолики в стиле ќќѕ
+ * Uses extends, abstract, @Override for sub-classes Player: Human, Cpu
  */
 
 import java.util.Random;
@@ -27,8 +27,8 @@ class Field {
         newMap();
         printMap();
 
-        Player player = new Player();
-        Cpu cpu = new Cpu();
+        Player player = new Human();
+        Player cpu = new Cpu();
 
         while (true) {
             Cell p = player.turn();
@@ -131,28 +131,36 @@ class Field {
     }
 }
 
-class Player {
-    final char litera = 'X';
+abstract class Player {
+    final char LITERA = 'Х';
+
+    abstract Cell turn();
+}
+
+class Human extends Player {
+    final char LITERA = 'X';
     Scanner sc = new Scanner(System.in);
 
+    @Override
     Cell turn() {
         int x, y;
         System.out.println("YOUR TURN. ENTER X -> Y (1..3)");
         x = sc.nextInt() - 1;
         y = sc.nextInt() - 1;
-        return new Cell(x, y, litera);
+        return new Cell(x, y, LITERA);
     }
 }
 
-class Cpu {
-    final char litera = 'O';
+class Cpu extends Player {
+    final char LITERA = 'O';
     Random r = new Random();
 
+    @Override
     Cell turn() {
         int x, y;
         x = r.nextInt(Field.SIZE);
         y = r.nextInt(Field.SIZE);
-        return new Cell(x, y, litera);
+        return new Cell(x, y, LITERA);
     }
 }
 
